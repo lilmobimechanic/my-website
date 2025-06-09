@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Mobifix</title>
   <style>
     body {
@@ -50,6 +50,36 @@
       vertical-align: middle;
       margin-right: 8px;
     }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin-top: 30px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    form button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1em;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
@@ -73,61 +103,14 @@
     <h3>FRP Unlock (Google Account Lock)</h3>
     <p>Android device stuck at Google verification screen? Order unlock now.</p>
   </div>
+  <!-- Add other service-boxes as before ... -->
 
-  <div class="service-box">
-    <h3>Demo to Retail Mode</h3>
-    <p>Remove demo mode and switch to fully functional retail mode.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Country / Region Unlock</h3>
-    <p>Unlock region-locked devices and use them anywhere in the world.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Firmware Flashing</h3>
-    <p>Upgrade or downgrade firmware for better performance or compatibility.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Mi Account / Xiaomi FMI Lock</h3>
-    <p>Bypass Mi Cloud lock on Xiaomi devices.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Apple iCloud Lock / FMI</h3>
-    <p>Unlock iCloud activation lock (Find My iPhone) on supported models.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Samsung FRP via USB</h3>
-    <p>Quick unlock for Samsung FRP via USB.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Samsung FRP via SN or IMEI</h3>
-    <p>90% model coverage for remote unlocking by SN or IMEI.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Motorola FRP</h3>
-    <p>Remove Google lock from Motorola phones.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>OPPO / OnePlus / Realme FRP</h3>
-    <p>Unlock FRP lock on OPPO, OnePlus, and Realme devices.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Vivo FRP</h3>
-    <p>Remove Google FRP lock from Vivo smartphones.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Huawei / Honor FRP Key</h3>
-    <p>Unlock FRP on Huawei or Honor devices using secure FRP Key.</p>
-  </div>
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="order-details" placeholder="Order details..." required></textarea>
+    <button type="submit">Place Order</button>
+  </form>
 </section>
 
 <section id="about">
@@ -141,8 +124,8 @@
   <h2>Contact</h2>
   <p>You can reach me via my Telegram Group below:</p>
   <p class="telegram-link">
-    <a href="https://t.me/Mobifixbylilmobi" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo">Join Mobifix on Telegram
+    <a href="https://t.me/Mobifixbylilmobi" target="_blank" rel="noopener noreferrer">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" /> Join Mobifix on Telegram
     </a>
   </p>
 </section>
