@@ -1,46 +1,251 @@
-<form id="orderForm">
-  <label>
-    Device Model:<br />
-    <input type="text" name="device" required />
-  </label><br /><br />
-  
-  <label>
-    IMEI/SN Number:<br />
-    <input type="text" name="imei" required />
-  </label><br /><br />
-  
-  <label>
-    Problem Description:<br />
-    <textarea name="problem" rows="4" required></textarea>
-  </label><br /><br />
-  
-  <button type="submit">Place Order</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mobifix Service Orders</title>
+<style>
+  /* Basic reset and fonts */
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eee;
+    min-height: 100vh;
+  }
+  a {
+    color: #0af;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Container and header */
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  h1, h2 {
+    color: #0af;
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  /* Service cards grid */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    background: #222;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #0af44a33;
+    transition: box-shadow 0.3s ease;
+  }
+  .service-card:hover {
+    box-shadow: 0 0 25px #0af;
+  }
+
+  .service-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .service-card p {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  /* Popup overlay */
+  #orderModal {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  /* Popup content */
+  #orderModal .modal-content {
+    background: #1c1c1c;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    color: #eee;
+    box-shadow: 0 0 25px #0af;
+    position: relative;
+  }
+
+  /* Close button */
+  #orderModal .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 24px;
+    color: #0af;
+    cursor: pointer;
+  }
+
+  /* Form styles */
+  #orderForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  #orderForm input[type="text"],
+  #orderForm textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    background: #222;
+    border: none;
+    border-radius: 6px;
+    color: #eee;
+    font-size: 14px;
+    resize: vertical;
+  }
+  #orderForm textarea {
+    min-height: 70px;
+  }
+  #orderForm button {
+    margin-top: 15px;
+    background: #0af;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #111;
+    transition: background 0.3s ease;
+  }
+  #orderForm button:hover {
+    background: #07c;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Welcome to Mobifix</h1>
+  <p>Click a service below to place your order.</p>
+
+  <div class="service-grid" id="servicesList">
+    <!-- Services dynamically inserted here -->
+  </div>
+</div>
+
+<!-- Order Modal Popup -->
+<div id="orderModal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-content">
+    <span class="close-btn" title="Close">&times;</span>
+    <h2 id="modalTitle">Place Your Order</h2>
+    <form id="orderForm">
+      <input type="hidden" name="service" id="serviceInput" />
+      <label for="device">Device Model *</label>
+      <input type="text" id="device" name="device" required placeholder="e.g., Redmi Note 10" />
+
+      <label for="imei">IMEI / SN Number *</label>
+      <input type="text" id="imei" name="imei" required placeholder="Enter IMEI or Serial Number" />
+
+      <label for="problem">Problem Description *</label>
+      <textarea id="problem" name="problem" required placeholder="Describe the issue..."></textarea>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+</div>
 
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-  (function() {
-    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+  (function(){
+    emailjs.init("zFrWZiZot24i7Mtx1"); // Your Public Key
   })();
 
-  document.getElementById('orderForm').addEventListener('submit', function(event) {
+  // List of services
+  const services = [
+    "FRP RESET",
+    "DEMO RESET",
+    "REGION UNLOCK",
+    "MI ACCOUNT RESET",
+    "XIAOMI FMI ON (MI ACCOUNT PERMANANT CLEAN DEVICE ONLY LOST MODE NOT SUPPORTED)",
+    "APPLE FMI ON (ICLOUD LOCK PERMANANT CLEAN ONLY LOST MODE NOT SUPPORTED)"
+  ];
+
+  const servicesListEl = document.getElementById('servicesList');
+  const orderModal = document.getElementById('orderModal');
+  const serviceInput = document.getElementById('serviceInput');
+  const closeBtn = orderModal.querySelector('.close-btn');
+  const orderForm = document.getElementById('orderForm');
+
+  // Create service cards dynamically
+  services.forEach(service => {
+    const card = document.createElement('div');
+    card.className = 'service-card';
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', 'false');
+    card.innerHTML = `<h3>${service}</h3>`;
+    card.addEventListener('click', () => openOrderForm(service));
+    card.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openOrderForm(service);
+      }
+    });
+    servicesListEl.appendChild(card);
+  });
+
+  // Open modal and set service
+  function openOrderForm(service) {
+    serviceInput.value = service;
+    orderModal.style.display = 'flex';
+    orderModal.setAttribute('aria-hidden', 'false');
+    document.getElementById('device').focus();
+  }
+
+  // Close modal
+  closeBtn.addEventListener('click', closeModal);
+  orderModal.addEventListener('click', (e) => {
+    if (e.target === orderModal) closeModal();
+  });
+  function closeModal() {
+    orderModal.style.display = 'none';
+    orderModal.setAttribute('aria-hidden', 'true');
+    orderForm.reset();
+  }
+
+  // Form submit handler
+  orderForm.addEventListener('submit', function(event){
     event.preventDefault();
 
-    // Collect form data
-    const service = "Service Name or leave empty if you want";
     const templateParams = {
-      device: this.device.value,
-      imei: this.imei.value,
-      problem: this.problem.value
+      service: serviceInput.value,
+      device: this.device.value.trim(),
+      imei: this.imei.value.trim(),
+      problem: this.problem.value.trim()
     };
 
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+    emailjs.send('service_qfgwnx9', 'template_xsl8mqj', templateParams)
       .then(() => {
-        alert("Order placed successfully!");
-        this.reset();
+        alert("Order placed successfully! We will contact you soon.");
+        closeModal();
       }, (error) => {
-        alert("Failed to send order, please try again.");
-        console.error(error);
+        alert("Failed to send your order. Please try again.");
+        console.error('EmailJS error:', error);
       });
   });
 </script>
+
+</body>
+</html>
