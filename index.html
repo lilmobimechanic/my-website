@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MOBIFIX - Unlock Services</title>
   <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
@@ -14,55 +13,96 @@
       <h1>MOBIFIX - Unlock Services</h1>
     </header>
 
-    <section class="cards">
-      <button data-service="FRP Unlock">FRP Unlock</button>
-      <button data-service="Demo Mode Unlock">Demo Mode Unlock</button>
-      <button data-service="Country/Region Unlock">Country/Region Unlock</button>
-      <button data-service="Firmware Upgrade/Downgrade">Firmware Upgrade/Downgrade</button>
-      <button data-service="Carrier/Network Unlock">Carrier/Network Unlock</button>
-      <button data-service="Samsung FRP via SN/IMEI (Knox Supported Models)">Samsung FRP via SN/IMEI (Knox Supported Models)</button>
-      <button data-service="Samsung FRP via USB">Samsung FRP via USB</button>
-      <button data-service="Xiaomi/MI FRP via Sideload Mode (MI Assistant)">Xiaomi/MI FRP via Sideload Mode (MI Assistant)</button>
-      <button data-service="Nokia/HMD FRP via Fastboot Mode">Nokia/HMD FRP via Fastboot Mode</button>
-      <button data-service="Moto FRP via Fastboot Mode">Moto FRP via Fastboot Mode</button>
-      <button data-service="Honor/Huawei FRP via Fastboot Mode">Honor/Huawei FRP via Fastboot Mode</button>
-    </section>
-  </div>
+    <div class="cards">
+      <button onclick="openModal('FRP Unlock')">FRP Unlock</button>
+      <button onclick="openModal('Demo Mode Unlock')">Demo Mode Unlock</button>
+      <button onclick="openModal('Country/Region Unlock')">Country/Region Unlock</button>
+      <button onclick="openModal('Firmware Upgrade/Downgrade')">Firmware Upgrade/Downgrade</button>
+      <button onclick="openModal('Carrier/Network Unlock')">Carrier/Network Unlock</button>
+      <button onclick="openModal('Samsung FRP via SN/IMEI (Knox Supported Models)')">Samsung FRP via SN/IMEI (Knox Supported Models)</button>
+      <button onclick="openModal('Samsung FRP via USB')">Samsung FRP via USB</button>
+      <button onclick="openModal('Xiaomi/MI FRP via Sideload Mode (MI Assistant)')">Xiaomi/MI FRP via Sideload Mode (MI Assistant)</button>
+      <button onclick="openModal('Nokia/HMD FRP via Fastboot Mode')">Nokia/HMD FRP via Fastboot Mode</button>
+      <button onclick="openModal('Moto FRP via Fastboot Mode')">Moto FRP via Fastboot Mode</button>
+      <button onclick="openModal('Honor/Huawei FRP via Fastboot Mode')">Honor/Huawei FRP via Fastboot Mode</button>
+    </div>
 
-  <!-- Modal -->
-  <div id="orderModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Place Order</h2>
-      <form id="orderForm">
-        <input type="text" id="name" placeholder="Your Name" required />
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Place Order</h2>
+        <input id="username" type="text" placeholder="Your Name" required />
+
         <div class="phone-input">
           <select id="countryCode">
-            <option value="+91">+91</option>
-            <option value="+1">+1</option>
-            <option value="+44">+44</option>
+            <option value="91">+91</option>
+            <option value="1">+1</option>
+            <option value="44">+44</option>
             <!-- Add more country codes as needed -->
           </select>
-          <input type="tel" id="mobile" placeholder="Phone / WhatsApp" required />
+          <input id="mobile" type="tel" placeholder="Phone / WhatsApp" required />
         </div>
-        <input type="text" id="imei" placeholder="IMEI or SN" required />
-        <select id="deviceModel" required>
+
+        <input id="imei" type="text" placeholder="IMEI or SN" required />
+
+        <select id="brandModel">
           <option value="">Select Brand & Model</option>
-          <option value="Samsung Galaxy A12">Samsung Galaxy A12</option>
-          <option value="Xiaomi Redmi Note 10">Xiaomi Redmi Note 10</option>
-          <option value="Moto G60">Moto G60</option>
-          <option value="Vivo Y20">Vivo Y20</option>
+          <option value="Samsung Galaxy A13">Samsung Galaxy A13</option>
+          <option value="Redmi Note 11">Redmi Note 11</option>
+          <option value="iPhone 12">iPhone 12</option>
           <option value="Others">Others</option>
         </select>
-        <input type="text" id="region" placeholder="Region / Country" required />
-        <input type="hidden" id="selectedService" />
-        <button type="submit">Place Order</button>
-      </form>
+
+        <input id="region" type="text" placeholder="Region / Country" />
+
+        <button onclick="submitOrder()">Place Order</button>
+      </div>
     </div>
+
+    <footer>
+      <p>© 2025 MOBIFIX. Built with ❤️</p>
+    </footer>
   </div>
 
-  <footer>
-    © 2025 MOBIFIX. Built with ❤️
-  </footer>
+  <script>
+    function openModal(service) {
+      document.getElementById('orderModal').style.display = 'block';
+      window.selectedService = service;
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function isValidPhone(phone) {
+      return /^\d{7,15}$/.test(phone);
+    }
+
+    function submitOrder() {
+      const username = document.getElementById('username').value.trim();
+      const countryCode = document.getElementById('countryCode').value;
+      const mobile = document.getElementById('mobile').value.trim();
+      const imei = document.getElementById('imei').value.trim();
+      const brandModel = document.getElementById('brandModel').value;
+      const region = document.getElementById('region').value.trim();
+
+      if (!username || !mobile || !isValidPhone(mobile)) {
+        alert('Please enter a valid name and phone number.');
+        return;
+      }
+
+      const message = `🛠️ *New MOBIFIX Order*\n\n` +
+                      `🔧 *Service:* ${window.selectedService}\n` +
+                      `👤 *Name:* ${username}\n` +
+                      `📞 *Phone:* +${countryCode} ${mobile}\n` +
+                      `🔢 *IMEI/SN:* ${imei}\n` +
+                      `📱 *Model:* ${brandModel}\n` +
+                      `🌍 *Region:* ${region}`;
+
+      const encodedMsg = encodeURIComponent(message);
+      const telegramUrl = `https://t.me/mobifixbot?start=send&text=${encodedMsg}`;
+      window.open(telegramUrl, '_blank');
+    }
+  </script>
 </body>
 </html>
