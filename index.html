@@ -3,119 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>mobiFix - Unlock Services</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0e0e0e;
-      color: #ffffff;
-      line-height: 1.6;
-    }
-
-    header {
-      padding: 2rem 1rem;
-      text-align: center;
-      background: linear-gradient(45deg, #1f1f1f, #2d2d2d);
-      border-bottom: 1px solid #333;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      margin: 0;
-      color: #00e5ff;
-    }
-
-    section {
-      max-width: 800px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
-
-    h2 {
-      color: #00e5ff;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #444;
-      padding-bottom: 0.5rem;
-    }
-
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-
-    .service-box {
-      background-color: #1a1a1a;
-      padding: 1rem;
-      border-radius: 8px;
-      border-left: 4px solid #00e5ff;
-      transition: transform 0.2s ease;
-    }
-
-    .service-box:hover {
-      transform: translateY(-3px);
-      background-color: #222;
-    }
-
-    .premium-section {
-      margin-top: 2rem;
-      padding: 1rem;
-      background-color: #151515;
-      border: 1px solid #333;
-      border-radius: 8px;
-    }
-
-    .premium-section ul {
-      margin-top: 0.5rem;
-      padding-left: 1.5rem;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #777;
-      border-top: 1px solid #222;
-      margin-top: 3rem;
-    }
-  </style>
+  <title>mobiFix - Premium Unlock Services</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <header>
-    <h1>mobiFix - Unlock Services</h1>
-  </header>
-
-  <section>
-    <h2>Services I Offer</h2>
-    <div class="service-grid">
-      <div class="service-box">FRP Unlock</div>
-      <div class="service-box">Demo Mode Unlock</div>
-      <div class="service-box">Country/Region Unlock</div>
-      <div class="service-box">Firmware Upgrade/Downgrade</div>
-      <div class="service-box">Carrier/Network Unlock</div>
-      <div class="service-box">Samsung FRP via SN/IMEI (Knox Supported Models)</div>
-      <div class="service-box">Samsung FRP via USB</div>
-      <div class="service-box">Xiaomi/MI FRP via Sideload Mode (MI Assistant)</div>
-      <div class="service-box">Nokia/HMD FRP via Fastboot Mode</div>
-      <div class="service-box">Moto FRP via Fastboot Mode</div>
-      <div class="service-box">Honor/Huawei FRP via Fastboot Mode</div>
+  <div class="container">
+    <h1>🔓 mobiFix - Unlock Services</h1>
+    
+    <div class="cards" id="service-list">
+      <!-- Cards will be populated here -->
     </div>
 
-    <div class="premium-section">
-      <h2>Premium Services</h2>
-      <p>These services are priced higher than usual due to their complexity:</p>
-      <ul>
-        <li>Moto FRP</li>
-        <li>Vivo FRP</li>
-        <li>Samsung FRP</li>
-      </ul>
+    <!-- Modal Form -->
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Place Order</h2>
+        <form id="orderForm">
+          <input type="text" id="name" placeholder="Your Name" required>
+          <input type="text" id="phone" placeholder="Phone / WhatsApp" required>
+          <input type="text" id="imei" placeholder="IMEI or SN" required>
+          <input type="text" id="device" placeholder="Device Model" required>
+          <input type="text" id="region" placeholder="Region / Country" required>
+          <input type="hidden" id="selectedService">
+          <button type="submit">Send to Telegram</button>
+        </form>
+      </div>
     </div>
-  </section>
 
-  <footer>
-    &copy; 2025 mobiFix. All rights reserved.
-  </footer>
+    <footer>&copy; 2025 mobiFix. Built with ❤️</footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
