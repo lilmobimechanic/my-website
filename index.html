@@ -1,279 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobifix - Premium Mobile Service</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <style>
-    /* Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      color: #333;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+<form id="orderForm">
+  <label>
+    Device Model:<br />
+    <input type="text" name="device" required />
+  </label><br /><br />
+  
+  <label>
+    IMEI/SN Number:<br />
+    <input type="text" name="imei" required />
+  </label><br /><br />
+  
+  <label>
+    Problem Description:<br />
+    <textarea name="problem" rows="4" required></textarea>
+  </label><br /><br />
+  
+  <button type="submit">Place Order</button>
+</form>
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 9999;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 1.6rem;
-      color: #1e40af;
-      cursor: pointer;
-    }
-    nav {
-      display: flex;
-      gap: 2rem;
-    }
-    nav a {
-      font-weight: 600;
-      color: #333;
-      transition: color 0.3s;
-      font-size: 1rem;
-    }
-    nav a:hover {
-      color: #1e40af;
-    }
-
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      width: 24px;
-      height: 18px;
-    }
-    .hamburger div {
-      width: 100%;
-      height: 3px;
-      background: #1e40af;
-      border-radius: 2px;
-      transition: 0.3s;
-    }
-
-    /* Mobile nav */
-    @media(max-width: 768px) {
-      nav {
-        position: fixed;
-        top: 60px;
-        right: -100%;
-        width: 200px;
-        height: calc(100vh - 60px);
-        background: #fff;
-        flex-direction: column;
-        padding: 2rem 1rem;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-        transition: right 0.3s ease-in-out;
-        gap: 1.5rem;
-      }
-      nav.active {
-        right: 0;
-      }
-      .hamburger {
-        display: flex;
-      }
-    }
-
-    /* Hero */
-    .hero {
-      padding: 120px 2rem 60px; /* padding top adjusted for fixed header */
-      text-align: center;
-      background: #f5f7ff;
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      color: #1e40af;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 2.5rem;
-      color: #555;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .btn-primary {
-      background: #1e40af;
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 6px 10px rgb(30 64 175 / 0.3);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    .btn-primary:hover {
-      background: #0041bb;
-      box-shadow: 0 8px 15px rgb(0 65 187 / 0.5);
-    }
-
-    /* Services */
-    .services {
-      max-width: 1100px;
-      margin: 0 auto 5rem;
-      padding: 0 1.5rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 2.5rem;
-    }
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgb(0 0 0 / 0.08);
-      padding: 2.2rem 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      text-align: center;
-    }
-    .card:hover {
-      box-shadow: 0 16px 35px rgb(0 0 0 / 0.15);
-      transform: translateY(-6px);
-    }
-    .card .material-icons {
-      font-size: 48px;
-      color: #1e40af;
-      margin-bottom: 1.2rem;
-    }
-    .card h3 {
-      font-size: 1.3rem;
-      color: #1e40af;
-      margin-bottom: 0.7rem;
-      font-weight: 700;
-    }
-    .card p {
-      font-size: 1rem;
-      color: #555;
-      flex-grow: 1;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      font-size: 0.95rem;
-      color: #888;
-      border-top: 1px solid #eee;
-      background: #fafafa;
-    }
-    footer p {
-      margin-bottom: 0.4rem;
-    }
-
-  </style>
-</head>
-<body>
-
-<header>
-  <a href="#" class="logo">Mobifix</a>
-  <nav id="nav-menu">
-    <a href="#services" onclick="closeMenu()">Services</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
-  </nav>
-  <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</header>
-
-<section class="hero">
-  <h1>Premium Mobile Repair & Unlock Services</h1>
-  <p>Fast, reliable, and affordable mobile repair solutions for all major brands. Get your phone fixed by experts today.</p>
-  <button class="btn-primary" onclick="scrollToSection('services')">Order Now</button>
-</section>
-
-<section id="services" class="services" aria-label="Services offered">
-  <div class="card" tabindex="0" role="button" onclick="orderService('Screen Repair')"
-       onkeypress="if(event.key==='Enter') orderService('Screen Repair')">
-    <span class="material-icons" aria-hidden="true">smartphone</span>
-    <h3>Screen Repair</h3>
-    <p>Get your cracked or broken mobile screen fixed quickly with genuine parts and quality service.</p>
-  </div>
-  <div class="card" tabindex="0" role="button" onclick="orderService('Battery Replacement')"
-       onkeypress="if(event.key==='Enter') orderService('Battery Replacement')">
-    <span class="material-icons" aria-hidden="true">battery_charging_full</span>
-    <h3>Battery Replacement</h3>
-    <p>Restore your phone's battery life with a new, high-quality battery replacement that lasts longer.</p>
-  </div>
-  <div class="card" tabindex="0" role="button" onclick="orderService('Unlock Service')"
-       onkeypress="if(event.key==='Enter') orderService('Unlock Service')">
-    <span class="material-icons" aria-hidden="true">lock_open</span>
-    <h3>Unlock Service</h3>
-    <p>Unlock your mobile phone for any network quickly, safely, and reliably with our expert service.</p>
-  </div>
-  <div class="card" tabindex="0" role="button" onclick="orderService('Software Fix')"
-       onkeypress="if(event.key==='Enter') orderService('Software Fix')">
-    <span class="material-icons" aria-hidden="true">build_circle</span>
-    <h3>Software Fix</h3>
-    <p>Resolve software issues, bugs, and glitches with expert troubleshooting and software updates.</p>
-  </div>
-</section>
-
-<footer id="contact">
-  <p>Contact us: <a href="mailto:info@mobifix.com">info@mobifix.com</a> | +91 98765 43210</p>
-  <p>&copy; 2025 Mobifix. All rights reserved.</p>
-</footer>
-
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    hamburger.classList.toggle('active');
+  (function() {
+    emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS Public Key
+  })();
+
+  document.getElementById('orderForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Collect form data
+    const service = "Service Name or leave empty if you want";
+    const templateParams = {
+      device: this.device.value,
+      imei: this.imei.value,
+      problem: this.problem.value
+    };
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      .then(() => {
+        alert("Order placed successfully!");
+        this.reset();
+      }, (error) => {
+        alert("Failed to send order, please try again.");
+        console.error(error);
+      });
   });
-
-  // Close menu on link click
-  function closeMenu() {
-    navMenu.classList.remove('active');
-    hamburger.classList.remove('active');
-  }
-
-  // Scroll to section smooth
-  function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({behavior: 'smooth'});
-  }
-
-  // Telegram order integration
-  function orderService(service) {
-    const botUsername = "YourTelegramBot"; // <- Replace with your Telegram bot username without @
-    const message = encodeURIComponent(`I want to order: ${service}`);
-    const telegramUrl = `https://t.me/${botUsername}?start=${message}`;
-    window.open(telegramUrl, '_blank');
-  }
 </script>
-
-</body>
-</html>
