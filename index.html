@@ -3,38 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>mobiFix - Premium Unlock Services</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <title>MOBIFIX - Unlock Services</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>🔓 mobiFix - Unlock Services</h1>
-    
-    <div class="cards" id="service-list">
-      <!-- Cards will be populated here -->
-    </div>
+    <header>
+      <img src="logo.png" alt="MOBIFIX Logo" class="logo" />
+      <h1>MOBIFIX - Unlock Services</h1>
+    </header>
 
-    <!-- Modal Form -->
-    <div id="orderModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Place Order</h2>
-        <form id="orderForm">
-          <input type="text" id="name" placeholder="Your Name" required>
-          <input type="text" id="phone" placeholder="Phone / WhatsApp" required>
-          <input type="text" id="imei" placeholder="IMEI or SN" required>
-          <input type="text" id="device" placeholder="Device Model" required>
-          <input type="text" id="region" placeholder="Region / Country" required>
-          <input type="hidden" id="selectedService">
-          <button type="submit">Send to Telegram</button>
-        </form>
-      </div>
-    </div>
-
-    <footer>&copy; 2025 mobiFix. Built with ❤️</footer>
+    <section class="cards">
+      <button data-service="FRP Unlock">FRP Unlock</button>
+      <button data-service="Demo Mode Unlock">Demo Mode Unlock</button>
+      <button data-service="Country/Region Unlock">Country/Region Unlock</button>
+      <button data-service="Firmware Upgrade/Downgrade">Firmware Upgrade/Downgrade</button>
+      <button data-service="Carrier/Network Unlock">Carrier/Network Unlock</button>
+      <button data-service="Samsung FRP via SN/IMEI (Knox Supported Models)">Samsung FRP via SN/IMEI (Knox Supported Models)</button>
+      <button data-service="Samsung FRP via USB">Samsung FRP via USB</button>
+      <button data-service="Xiaomi/MI FRP via Sideload Mode (MI Assistant)">Xiaomi/MI FRP via Sideload Mode (MI Assistant)</button>
+      <button data-service="Nokia/HMD FRP via Fastboot Mode">Nokia/HMD FRP via Fastboot Mode</button>
+      <button data-service="Moto FRP via Fastboot Mode">Moto FRP via Fastboot Mode</button>
+      <button data-service="Honor/Huawei FRP via Fastboot Mode">Honor/Huawei FRP via Fastboot Mode</button>
+    </section>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Place Order</h2>
+      <form id="orderForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <div class="phone-input">
+          <select id="countryCode">
+            <option value="+91">+91</option>
+            <option value="+1">+1</option>
+            <option value="+44">+44</option>
+            <!-- Add more country codes as needed -->
+          </select>
+          <input type="tel" id="mobile" placeholder="Phone / WhatsApp" required />
+        </div>
+        <input type="text" id="imei" placeholder="IMEI or SN" required />
+        <select id="deviceModel" required>
+          <option value="">Select Brand & Model</option>
+          <option value="Samsung Galaxy A12">Samsung Galaxy A12</option>
+          <option value="Xiaomi Redmi Note 10">Xiaomi Redmi Note 10</option>
+          <option value="Moto G60">Moto G60</option>
+          <option value="Vivo Y20">Vivo Y20</option>
+          <option value="Others">Others</option>
+        </select>
+        <input type="text" id="region" placeholder="Region / Country" required />
+        <input type="hidden" id="selectedService" />
+        <button type="submit">Place Order</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 MOBIFIX. Built with ❤️
+  </footer>
 </body>
 </html>
