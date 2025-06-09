@@ -1,74 +1,81 @@
-const services = [
-  "FRP Unlock",
-  "Demo Mode Unlock",
-  "Country/Region Unlock",
-  "Firmware Upgrade/Downgrade",
-  "Carrier/Network Unlock",
-  "Samsung FRP via SN/IMEI (Knox Supported Models)",
-  "Samsung FRP via USB",
-  "Xiaomi/MI FRP via Sideload Mode (MI Assistant)",
-  "Nokia/HMD FRP via Fastboot Mode",
-  "Moto FRP via Fastboot Mode",
-  "Honor/Huawei FRP via Fastboot Mode"
-];
+// TELEGRAM BOT DETAILS
+const TELEGRAM_BOT_TOKEN = '8112618316:AAHEyXsz4-AveQeXinT9owFfEEckeM4rCfk';
+const TELEGRAM_CHAT_ID = '@mobifixbot'; // This sends to your bot via @username
 
-const token = "PASTE_YOUR_TOKEN_HERE";
-const chat_id = "PASTE_YOUR_CHAT_ID_HERE";
+const modal = document.getElementById('orderModal');
+const form = document.getElementById('orderForm');
+const selectedServiceInput = document.getElementById('selectedService');
 
-const serviceList = document.getElementById("service-list");
-const modal = document.getElementById("orderModal");
-const form = document.getElementById("orderForm");
-const selectedServiceInput = document.getElementById("selectedService");
-
-services.forEach(service => {
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.innerHTML = `<i class="fas fa-mobile-alt"></i>${service}`;
-  card.onclick = () => {
-    modal.style.display = "block";
-    selectedServiceInput.value = service;
-  };
-  serviceList.appendChild(card);
+// Open modal and set service name
+document.querySelectorAll('.cards button').forEach(button => {
+  button.addEventListener('click', () => {
+    selectedServiceInput.value = button.dataset.service;
+    modal.style.display = 'block';
+  });
 });
 
-document.querySelector(".close").onclick = () => {
-  modal.style.display = "none";
-};
+function closeModal() {
+  modal.style.display = 'none';
+}
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
-    modal.style.display = "none";
+    modal.style.display = 'none';
   }
-};
+}
 
-form.addEventListener("submit", function(e) {
+// Phone number validation
+function isValidPhone(number) {
+  return /^[0-9]{7,15}$/.test(number);
+}
+
+// Handle form submission
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const text = `
-📱 *New Service Request* 📱
-━━━━━━━━━━━━━━━
-🔧 Service: ${selectedServiceInput.value}
-🙍 Name: ${document.getElementById("name").value}
-📞 Phone: ${document.getElementById("phone").value}
-🔢 IMEI/SN: ${document.getElementById("imei").value}
-📱 Device: ${document.getElementById("device").value}
-🌐 Region: ${document.getElementById("region").value}
-━━━━━━━━━━━━━━━`;
 
-  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id,
-      text,
-      parse_mode: "Markdown"
-    })
-  })
-  .then(res => {
-    alert("Order sent successfully!");
-    modal.style.display = "none";
-    form.reset();
-  })
-  .catch(err => alert("Failed to send order."));
+  const name = document.getElementById('name').value.trim();
+  const countryCode = document.getElementById('countryCode').value;
+  const mobile = document.getElementById('mobile').value.trim();
+  const fullPhone = countryCode + mobile;
+  const imei = document.getElementById('imei').value.trim();
+  const model = document.getElementById('deviceModel').value;
+  const region = document.getElementById('region').value.trim();
+  const service = selectedServiceInput.value;
+
+  if (!isValidPhone(mobile)) {
+    alert("Please enter a valid mobile number (7-15 digits).");
+    return;
+  }
+
+  const message = `
+📲 *New Service Order Received*:
+
+🔧 *Service:* ${service}
+👤 *Name:* ${name}
+📞 *Phone:* ${fullPhone}
+🔢 *IMEI/SN:* ${imei}
+📱 *Device:* ${model}
+🌍 *Region:* ${region}
+  `;
+
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: "Markdown"
+      })
+    });
+
+    alert("Order sent successfully! Redirecting to Telegram...");
+    window.location.href = "https://web.telegram.org/k/#@mobifixbot"; // Redirect to chat with bot
+  } catch (error) {
+    alert("Failed to send order. Please try again later.");
+    console.error(error);
+  }
+
+  form.reset();
+  closeModal();
 });
