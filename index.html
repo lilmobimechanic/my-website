@@ -1,73 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Mobifix Order</title>
-  <meta charset="UTF-8" />
-  <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 40px; }
-    .form-box { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
-    label { display: block; margin-top: 10px; }
-    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
-    button { background-color: #007bff; color: white; border: none; cursor: pointer; margin-top: 15px; }
-  </style>
-</head>
-<body>
-  <div class="form-box">
-    <h2>Place Your Order</h2>
-    <form id="orderForm">
-      <label for="service">Select Service</label>
-      <select id="service" required>
-        <option value="FRP Unlock (Google Account Lock)">FRP Unlock</option>
-        <option value="IMEI Repair">IMEI Repair</option>
-        <option value="Network Unlock">Network Unlock</option>
-      </select>
+<form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+  <label>Select Service</label>
+  <select name="Service">
+    <option>FRP Unlock</option>
+    <option>Network Unlock</option>
+    <option>Mi Account Unlock</option>
+  </select>
 
-      <label for="name">Your Name</label>
-      <input type="text" id="name" required>
+  <label>Your Name</label>
+  <input type="text" name="Name" required>
 
-      <label for="email">Your Email</label>
-      <input type="email" id="email" required>
+  <label>Your Email</label>
+  <input type="email" name="Email" required>
 
-      <label for="details">Order Details</label>
-      <textarea id="details" rows="4"></textarea>
+  <label>Order Details</label>
+  <textarea name="Details" required></textarea>
 
-      <button type="submit">Place Order</button>
-    </form>
-  </div>
+  <!-- Optional: Disable CAPTCHA and redirect -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="box">
+  <input type="hidden" name="_next" value="https://lilmobimechanic.github.io/mobifix/success.html">
 
-  <script>
-    const botToken = '8112618316:AAHEyXsz4-AveQeXinT9owFfEEckeM4rCfk';
-    const chatId = 'REPLACE_WITH_YOUR_CHAT_ID'; // <--- UPDATE THIS
-
-    document.getElementById('orderForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const service = document.getElementById('service').value;
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const details = document.getElementById('details').value.trim();
-
-      const message = `
-🛒 *New Mobifix Order*
-
-🛠 *Service:* ${service}
-👤 *Name:* ${name}
-📧 *Email:* ${email}
-📝 *Details:* ${details || 'None'}
-      `;
-
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: 'Markdown'
-        })
-      })
-      .then(res => res.ok ? alert('Order placed successfully!') : alert('Failed to send order.'))
-      .catch(err => alert('Error: ' + err.message));
-    });
-  </script>
-</body>
-</html>
+  <button type="submit">Place Order</button>
+</form>
