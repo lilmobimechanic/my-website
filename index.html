@@ -5,132 +5,154 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mobifix Service Orders</title>
 <style>
-  /* Basic reset and fonts */
+  /* Reset & base */
   body {
     margin: 0; padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #121212;
-    color: #eee;
+    background: #f7f9fc;
+    color: #222;
     min-height: 100vh;
   }
   a {
-    color: #0af;
+    color: #0a73ff;
     text-decoration: none;
   }
   a:hover {
     text-decoration: underline;
   }
 
-  /* Container and header */
+  /* Container */
   .container {
     max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
+    margin: 40px auto;
+    padding: 0 20px 40px 20px;
   }
 
   h1, h2 {
-    color: #0af;
+    color: #0a73ff;
     margin-bottom: 25px;
     font-weight: 700;
   }
 
-  /* Service cards grid */
+  p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #444;
+  }
+
+  /* Services grid */
   .service-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
     gap: 20px;
   }
 
   .service-card {
-    background: #222;
-    border-radius: 10px;
-    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 15px rgba(10, 115, 255, 0.15);
     cursor: pointer;
-    box-shadow: 0 0 15px #0af44a33;
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
-  .service-card:hover {
-    box-shadow: 0 0 25px #0af;
+  .service-card:hover,
+  .service-card:focus {
+    box-shadow: 0 8px 30px rgba(10, 115, 255, 0.3);
+    transform: translateY(-5px);
+    outline: none;
   }
 
   .service-card h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-  .service-card p {
-    font-size: 14px;
-    color: #aaa;
+    margin: 0;
+    font-size: 1.15rem;
+    color: #0a73ff;
   }
 
-  /* Popup overlay */
+  /* Modal overlay */
   #orderModal {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0,0,0,0.5);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
   }
 
-  /* Popup content */
+  /* Modal content */
   #orderModal .modal-content {
-    background: #1c1c1c;
-    padding: 30px;
-    border-radius: 15px;
+    background: #fff;
+    padding: 35px 30px;
+    border-radius: 16px;
     width: 90%;
-    max-width: 400px;
-    color: #eee;
-    box-shadow: 0 0 25px #0af;
+    max-width: 440px;
+    color: #222;
+    box-shadow: 0 15px 35px rgba(10, 115, 255, 0.25);
     position: relative;
   }
 
   /* Close button */
   #orderModal .close-btn {
     position: absolute;
-    top: 12px;
-    right: 15px;
-    font-size: 24px;
-    color: #0af;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #0a73ff;
     cursor: pointer;
+    user-select: none;
+  }
+  #orderModal .close-btn:hover {
+    color: #064ea6;
   }
 
   /* Form styles */
   #orderForm label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 600;
+    font-size: 14px;
   }
   #orderForm input[type="text"],
   #orderForm textarea {
     width: 100%;
-    padding: 8px 10px;
-    margin-top: 5px;
-    background: #222;
-    border: none;
-    border-radius: 6px;
-    color: #eee;
-    font-size: 14px;
-    resize: vertical;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: 1.8px solid #cdd7e3;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #222;
+    transition: border-color 0.3s ease;
+  }
+  #orderForm input[type="text"]:focus,
+  #orderForm textarea:focus {
+    border-color: #0a73ff;
+    outline: none;
   }
   #orderForm textarea {
-    min-height: 70px;
+    resize: vertical;
+    min-height: 80px;
   }
   #orderForm button {
-    margin-top: 15px;
-    background: #0af;
+    background: #0a73ff;
     border: none;
-    padding: 12px;
+    padding: 14px 0;
     width: 100%;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    color: #111;
-    transition: background 0.3s ease;
+    color: white;
+    box-shadow: 0 6px 15px rgba(10, 115, 255, 0.4);
+    transition: background-color 0.3s ease;
   }
   #orderForm button:hover {
-    background: #07c;
+    background: #064ea6;
   }
 </style>
 </head>
@@ -138,10 +160,10 @@
 
 <div class="container">
   <h1>Welcome to Mobifix</h1>
-  <p>Click a service below to place your order.</p>
+  <p>Choose your service below to place your order quickly and securely.</p>
 
   <div class="service-grid" id="servicesList">
-    <!-- Services dynamically inserted here -->
+    <!-- Service cards will appear here -->
   </div>
 </div>
 
@@ -169,10 +191,9 @@
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function(){
-    emailjs.init("zFrWZiZot24i7Mtx1"); // Your Public Key
+    emailjs.init("zFrWZiZot24i7Mtx1");
   })();
 
-  // List of services
   const services = [
     "FRP RESET",
     "DEMO RESET",
@@ -188,7 +209,6 @@
   const closeBtn = orderModal.querySelector('.close-btn');
   const orderForm = document.getElementById('orderForm');
 
-  // Create service cards dynamically
   services.forEach(service => {
     const card = document.createElement('div');
     card.className = 'service-card';
@@ -206,7 +226,6 @@
     servicesListEl.appendChild(card);
   });
 
-  // Open modal and set service
   function openOrderForm(service) {
     serviceInput.value = service;
     orderModal.style.display = 'flex';
@@ -214,18 +233,17 @@
     document.getElementById('device').focus();
   }
 
-  // Close modal
   closeBtn.addEventListener('click', closeModal);
   orderModal.addEventListener('click', (e) => {
     if (e.target === orderModal) closeModal();
   });
+
   function closeModal() {
     orderModal.style.display = 'none';
     orderModal.setAttribute('aria-hidden', 'true');
     orderForm.reset();
   }
 
-  // Form submit handler
   orderForm.addEventListener('submit', function(event){
     event.preventDefault();
 
