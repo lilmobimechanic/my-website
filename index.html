@@ -1,231 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+  <title>Mobifix Order</title>
   <meta charset="UTF-8" />
-  <title>Mobifix</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background-color: #444;
-      overflow: hidden;
-      text-align: center;
-    }
-    nav a {
-      display: inline-block;
-      color: white;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    nav a:hover {
-      background-color: #111;
-    }
-    section {
-      padding: 40px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    h2 {
-      color: #222;
-    }
-    .service-box {
-      border: 1px solid #ccc;
-      padding: 20px;
-      margin: 15px 0;
-      background-color: #fff;
-      border-radius: 8px;
-    }
-    .telegram-link img {
-      height: 24px;
-      vertical-align: middle;
-      margin-right: 8px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    select, input, textarea {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px;
-      width: 100%;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 4px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 40px; }
+    .form-box { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background-color: #007bff; color: white; border: none; cursor: pointer; margin-top: 15px; }
   </style>
 </head>
 <body>
+  <div class="form-box">
+    <h2>Place Your Order</h2>
+    <form id="orderForm">
+      <label for="service">Select Service</label>
+      <select id="service" required>
+        <option value="FRP Unlock (Google Account Lock)">FRP Unlock</option>
+        <option value="IMEI Repair">IMEI Repair</option>
+        <option value="Network Unlock">Network Unlock</option>
+      </select>
 
-<header>
-  <h1>Mobifix</h1>
-  <p>by lilmobimechanic</p>
-</header>
+      <label for="name">Your Name</label>
+      <input type="text" id="name" required>
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
-</nav>
+      <label for="email">Your Email</label>
+      <input type="email" id="email" required>
 
-<section id="home">
-  <h2>Home</h2>
-  <p>Place your mobile unlocking or repair service order below:</p>
+      <label for="details">Order Details</label>
+      <textarea id="details" rows="4"></textarea>
 
-  <div class="service-box">
-    <h3>FRP Unlock (Google Account Lock)</h3>
-    <p>Android device stuck at Google verification screen? Order unlock now.</p>
+      <button type="submit">Place Order</button>
+    </form>
   </div>
 
-  <div class="service-box">
-    <h3>Demo to Retail Mode</h3>
-    <p>Remove demo mode and switch to fully functional retail mode.</p>
-  </div>
+  <script>
+    const botToken = '8112618316:AAHEyXsz4-AveQeXinT9owFfEEckeM4rCfk';
+    const chatId = 'REPLACE_WITH_YOUR_CHAT_ID'; // <--- UPDATE THIS
 
-  <div class="service-box">
-    <h3>Country / Region Unlock</h3>
-    <p>Unlock region-locked devices and use them anywhere in the world.</p>
-  </div>
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-  <div class="service-box">
-    <h3>Firmware Flashing</h3>
-    <p>Upgrade or downgrade firmware for better performance or compatibility.</p>
-  </div>
+      const service = document.getElementById('service').value;
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const details = document.getElementById('details').value.trim();
 
-  <div class="service-box">
-    <h3>Mi Account / Xiaomi FMI Lock</h3>
-    <p>Bypass Mi Cloud lock on Xiaomi devices.</p>
-  </div>
+      const message = `
+🛒 *New Mobifix Order*
 
-  <div class="service-box">
-    <h3>Apple iCloud Lock / FMI</h3>
-    <p>Unlock iCloud activation lock (Find My iPhone) on supported models.</p>
-  </div>
+🛠 *Service:* ${service}
+👤 *Name:* ${name}
+📧 *Email:* ${email}
+📝 *Details:* ${details || 'None'}
+      `;
 
-  <div class="service-box">
-    <h3>Samsung FRP via USB</h3>
-    <p>Quick unlock for Samsung FRP via USB.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Samsung FRP via SN or IMEI</h3>
-    <p>90% model coverage for remote unlocking by SN or IMEI.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Motorola FRP</h3>
-    <p>Remove Google lock from Motorola phones.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>OPPO / OnePlus / Realme FRP</h3>
-    <p>Unlock FRP lock on OPPO, OnePlus, and Realme devices.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Vivo FRP</h3>
-    <p>Remove Google FRP lock from Vivo smartphones.</p>
-  </div>
-
-  <div class="service-box">
-    <h3>Huawei / Honor FRP Key</h3>
-    <p>Unlock FRP on Huawei or Honor devices using secure FRP Key.</p>
-  </div>
-
-  <!-- Order Form -->
-  <form id="orderForm">
-    <label for="service">Select Service</label>
-    <select id="service" name="service" required>
-      <option value="">-- Choose a service --</option>
-      <option value="FRP Unlock">FRP Unlock (Google Account Lock)</option>
-      <option value="Demo to Retail Mode">Demo to Retail Mode</option>
-      <option value="Country / Region Unlock">Country / Region Unlock</option>
-      <option value="Firmware Flashing">Firmware Flashing</option>
-      <option value="Mi Account / Xiaomi FMI Lock">Mi Account / Xiaomi FMI Lock</option>
-      <option value="Apple iCloud Lock / FMI">Apple iCloud Lock / FMI</option>
-      <option value="Samsung FRP via USB">Samsung FRP via USB</option>
-      <option value="Samsung FRP via SN or IMEI">Samsung FRP via SN or IMEI</option>
-      <option value="Motorola FRP">Motorola FRP</option>
-      <option value="OPPO / OnePlus / Realme FRP">OPPO / OnePlus / Realme FRP</option>
-      <option value="Vivo FRP">Vivo FRP</option>
-      <option value="Huawei / Honor FRP Key">Huawei / Honor FRP Key</option>
-    </select>
-
-    <label for="name">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Enter your full name" required />
-
-    <label for="email">Your Email</label>
-    <input type="email" id="email" name="email" placeholder="Enter your email" required />
-
-    <label for="details">Order Details</label>
-    <textarea id="details" name="details" rows="4" placeholder="Provide additional info or specify other requests"></textarea>
-
-    <button type="submit">Place Order</button>
-  </form>
-</section>
-
-<section id="about">
-  <h2>About</h2>
-  <p>
-    I offer mobile device services including firmware upgrade/downgrade, unlocking region locks, Google FRP lock, Apple iCloud (FMI) lock, Xiaomi Mi Account lock, switching from Demo to Retail mode, firmware flashing, and more.
-  </p>
-</section>
-
-<section id="contact">
-  <h2>Contact</h2>
-  <p>You can reach me via my Telegram Group below:</p>
-  <p class="telegram-link">
-    <a href="https://t.me/Mobifixbylilmobi" target="_blank" rel="noopener noreferrer">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo" />Join Mobifix on Telegram
-    </a>
-  </p>
-</section>
-
-<script>
-  document.getElementById('orderForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const service = document.getElementById('service').value;
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-
-    if (!service) {
-      alert('Please select a service.');
-      return;
-    }
-    if (!name || !email) {
-      alert('Please enter your name and email.');
-      return;
-    }
-
-    // Here you can add your form submission logic like sending data to server or payment integration
-    alert(`Order placed successfully!\n\nService: ${service}\nName: ${name}\nEmail: ${email}`);
-
-    this.reset();
-  });
-</script>
-
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      })
+      .then(res => res.ok ? alert('Order placed successfully!') : alert('Failed to send order.'))
+      .catch(err => alert('Error: ' + err.message));
+    });
+  </script>
 </body>
 </html>
