@@ -110,7 +110,7 @@
     const navMenu = document.getElementById('nav-menu');
     const hamburger = document.getElementById('hamburger');
 
-    emailjs.init({ publicKey: 'zFrWZiZot24i7Mtx1' });
+    emailjs.init({ publicKey: 'zW3PBUDddgK5Jnxgj' });
 
     function openModal(serviceName) {
       document.getElementById('service').value = serviceName;
@@ -136,7 +136,7 @@
 
     document.getElementById('service-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      emailjs.sendForm('service_qfgwnx9','template_xsl8mqj',this)
+      emailjs.sendForm('service_qfgwnx9','template_nq4dvdh',this)
         .then(()=>{alert('Your request has been sent successfully!'); this.reset(); closeModal();},()=>{alert('Failed to send your request. Please try again later.');});
     });
   </script>
