@@ -2,397 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mobifix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Poppins Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHq+2R3Xq/c2ZHjcEVzSx6fNix9hFIv6prj9Xl6VXLjPPZMwcXi1Y+7E5EQj6Mk38nqHSKmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Mobifix</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background-color: #fff; color: #333; line-height: 1.6; scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+    header { position: fixed; top: 0; left: 0; right: 0; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.6rem; font-weight: 700; color: #1e40af; }
+    nav { display: flex; gap: 2rem; }
+    nav a { font-weight: 600; color: #333; transition: color 0.3s; cursor: pointer; }
+    nav a:hover { color: #1e40af; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; width: 24px; height: 18px; }
+    .hamburger div { width: 100%; height: 3px; background: #1e40af; border-radius: 2px; transition: 0.3s; }
+    @media(max-width: 768px) {
+      nav { position: fixed; top: 60px; right: -100%; width: 200px; height: calc(100vh - 60px); background: #fff; flex-direction: column; padding: 2rem 1rem; box-shadow: -2px 0 10px rgba(0,0,0,0.1); transition: right 0.3s ease-in-out; }
+      nav.active { right: 0; }
+      .hamburger { display: flex; }
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff;
-      color: #333;
-      line-height: 1.6;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    header {
-      position: fixed;
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #333;
-    }
-    nav {
-      display: flex;
-    }
-    .nav-links {
-      list-style: none;
-      display: flex;
-    }
-    .nav-links li {
-      margin-left: 20px;
-    }
-    .nav-links li a {
-      font-weight: 500;
-      color: #333;
-    }
-    .nav-links li a:hover {
-      color: #007bff;
-    }
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-    .hamburger span {
-      height: 3px;
-      width: 25px;
-      background: #333;
-      margin-bottom: 5px;
-      border-radius: 5px;
-    }
-
-    /* Hero Section */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 80vh;
-      background-color: #fff;
-      padding-top: 60px; /* offset for fixed header */
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-      color: #555;
-      max-width: 600px;
-    }
-    .btn-primary {
-      background-color: #007bff;
-      color: #fff;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      transition: background 0.3s;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
-
-    /* Services Section */
-    .services {
-      padding: 60px 0;
-      background-color: #fff;
-    }
-    .services h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2rem;
-      color: #333;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      align-items: stretch;
-    }
-    .card {
-      background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-    .card i {
-      font-size: 3rem;
-      color: #007bff;
-      margin-bottom: 15px;
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-      color: #333;
-    }
-    .card p {
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      width: 90%;
-      max-width: 500px;
-      border-radius: 8px;
-      position: relative;
-    }
-    .modal-header {
-      margin-bottom: 10px;
-    }
-    .modal-header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: #333;
-    }
-    .close-button {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: #aaa;
-    }
-    .close-button:hover {
-      color: #333;
-    }
-    .modal form label {
-      display: block;
-      margin: 15px 0 5px;
-      font-size: 0.95rem;
-      color: #333;
-    }
-    .modal form input,
-    .modal form textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    .modal form textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-    .modal form button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      background: #007bff;
-      color: #fff;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .modal form button:hover {
-      background: #0056b3;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hamburger {
-        display: flex;
-      }
-      nav {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background: #fff;
-        width: 200px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      }
-      nav.active {
-        display: block;
-      }
-      .nav-links {
-        flex-direction: column;
-        padding: 10px 0;
-      }
-      .nav-links li {
-        margin: 10px 0;
-      }
-      .nav-links li a {
-        padding: 10px 20px;
-        display: block;
-      }
-    }
+    .hero { padding: 120px 2rem 60px; text-align: center; background: #f5f7ff; }
+    .hero h1 { font-size: 2.8rem; color: #1e40af; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.25rem; margin-bottom: 2.5rem; color: #555; max-width: 600px; margin: 0 auto; }
+    .btn-primary { background: #1e40af; color: white; padding: 1rem 2.5rem; border-radius: 8px; font-size: 1.1rem; border: none; cursor: pointer; font-weight: 600; box-shadow: 0 6px 10px rgb(30 64 175 / 0.3); transition: background 0.3s, box-shadow 0.3s; }
+    .btn-primary:hover { background: #0041bb; box-shadow: 0 8px 15px rgb(0 65 187 / 0.5); }
+    #services { display: none; padding: 4rem 2rem; background: #f9f9f9; }
+    .services-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 2rem; }
+    .card { background: white; border-radius: 12px; box-shadow: 0 10px 20px rgb(0 0 0 / 0.08); padding: 2.2rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: box-shadow 0.3s ease, transform 0.3s ease; }
+    .card:hover { box-shadow: 0 16px 35px rgb(0 0 0 / 0.15); transform: translateY(-6px); }
+    .card i { font-size: 3rem; color: #1e40af; margin-bottom: 1.2rem; }
+    .card h3 { font-size: 1.3rem; color: #1e40af; margin-bottom: 0.7rem; font-weight: 700; }
+    .card p { font-size: 1rem; color: #555; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 2000; }
+    .modal.active { display: flex; }
+    .modal-content { background: #fff; padding: 20px; width: 90%; max-width: 500px; border-radius: 8px; position: relative; }
+    .modal-content h2 { font-size: 1.5rem; color: #1e40af; margin-bottom: 1rem; }
+    .close-button { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #aaa; }
+    .modal form label { display: block; margin-top: 15px; font-weight: 600; }
+    .modal form input, .modal form textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+    .modal form button { margin-top: 20px; width: 100%; padding: 12px; background: #1e40af; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    .modal form button:hover { background: #0041bb; }
+    footer { text-align: center; padding: 2rem 1rem; font-size: 0.95rem; color: #888; border-top: 1px solid #eee; background: #fafafa; }
   </style>
 </head>
 <body>
   <header>
-    <div class="container header-inner">
-      <div class="logo">Mobifix</div>
-      <nav id="nav-menu">
-        <ul class="nav-links">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#" onclick="openModal('General Inquiry'); return false;">Contact</a></li>
-        </ul>
-      </nav>
-      <div class="hamburger" onclick="document.getElementById('nav-menu').classList.toggle('active')">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    <div class="logo">Mobifix</div>
+    <nav id="nav-menu">
+      <a id="home-link" href="#hero">Home</a>
+      <a id="services-link">Services</a>
+      <a id="contact-link" href="#contact">Contact</a>
+    </nav>
+    <div class="hamburger" onclick="navMenu.classList.toggle('active'); hamburger.classList.toggle('active');" id="hamburger">
+      <div></div><div></div><div></div>
     </div>
   </header>
-
   <section class="hero" id="hero">
-    <div class="container">
-      <h1>Fast and Reliable Phone Repair Services</h1>
-      <p>Get your phone fixed in no time with Mobifix's expert technicians. Quality service and customer satisfaction guaranteed.</p>
-      <button class="btn-primary" onclick="openModal('General Inquiry')">Get Started</button>
+    <h1>Fast and Reliable Phone Repair Services</h1>
+    <p>Get your phone fixed in no time with Mobifix's expert technicians. Quality service and customer satisfaction guaranteed.</p>
+    <button class="btn-primary" onclick="openModal('General Inquiry')">Get Started</button>
+  </section>
+  <section id="services">
+    <div class="services-grid">
+      <div class="card" onclick="openModal('Software Issues')"><i class="fas fa-tools"></i><h3>Software Issues</h3><p>Phone running slow or software problems? We can fix it.</p></div>
+      <div class="card" onclick="openModal('Screen Repair')"><i class="fas fa-mobile-alt"></i><h3>Screen Repair</h3><p>Cracked or broken screen? We'll replace it quickly.</p></div>
+      <div class="card" onclick="openModal('Battery Replacement')"><i class="fas fa-battery-half"></i><h3>Battery Replacement</h3><p>Phone battery not holding charge? We'll install a new one.</p></div>
+      <div class="card" onclick="openModal('Water Damage Repair')"><i class="fas fa-tint"></i><h3>Water Damage Repair</h3><p>Accidents happen. We'll fix your water-damaged device.</p></div>
+      <div class="card" onclick="openModal('Camera Repair')"><i class="fas fa-camera"></i><h3>Camera Repair</h3><p>Blurry or malfunctioning camera? We'll get it working again.</p></div>
+      <div class="card" onclick="openModal('Speaker/Microphone Repair')"><i class="fas fa-microphone"></i><h3>Speaker/Microphone</h3><p>Issues with sound? We'll repair or replace your speaker/mic.</p></div>
+      <div class="card" onclick="openModal('Hardware Issues')"><i class="fas fa-microchip"></i><h3>Hardware Issues</h3><p>Diagnose and repair internal hardware problems effectively.</p></div>
     </div>
   </section>
-
-  <section class="services" id="services">
-    <div class="container">
-      <h2>Our Services</h2>
-      <div class="services-grid">
-        <div class="card" onclick="openModal('Screen Repair')">
-          <i class="fas fa-mobile-alt"></i>
-          <h3>Screen Repair</h3>
-          <p>Cracked or broken screen? We'll replace it quickly.</p>
-        </div>
-        <div class="card" onclick="openModal('Battery Replacement')">
-          <i class="fas fa-battery-half"></i>
-          <h3>Battery Replacement</h3>
-          <p>Phone battery not holding charge? We'll install a new one.</p>
-        </div>
-        <div class="card" onclick="openModal('Water Damage Repair')">
-          <i class="fas fa-water"></i>
-          <h3>Water Damage Repair</h3>
-          <p>Accidents happen. We'll fix your water-damaged device.</p>
-        </div>
-        <div class="card" onclick="openModal('Camera Repair')">
-          <i class="fas fa-camera"></i>
-          <h3>Camera Repair</h3>
-          <p>Blurry or malfunctioning camera? We'll get it working again.</p>
-        </div>
-        <div class="card" onclick="openModal('Speaker/Microphone Repair')">
-          <i class="fas fa-microphone"></i>
-          <h3>Speaker/Microphone</h3>
-          <p>Issues with sound? We'll repair or replace your speaker/mic.</p>
-        </div>
-        <div class="card" onclick="openModal('Software Issues')">
-          <i class="fas fa-sync-alt"></i>
-          <h3>Software Issues</h3>
-          <p>Phone running slow or software problems? We can fix it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal Form -->
   <div class="modal" id="service-modal">
     <div class="modal-content">
-      <button class="close-button" onclick="closeModal()" aria-label="Close Modal">&times;</button>
-      <div class="modal-header">
-        <h2>Request Service</h2>
-      </div>
+      <button class="close-button" onclick="closeModal()">&times;</button>
+      <h2>Request Service</h2>
       <form id="service-form">
         <label for="service">Service</label>
         <input type="text" id="service" name="service" readonly />
-
         <label for="name">Name*</label>
         <input type="text" id="name" name="name" required />
-
         <label for="phone">Phone Number*</label>
         <input type="tel" id="phone" name="phone" required />
-
         <label for="model">Device Model*</label>
         <input type="text" id="model" name="model" required />
-
         <label for="problem">Problem*</label>
         <textarea id="problem" name="problem" required></textarea>
-
         <label for="email">Email (optional)</label>
         <input type="email" id="email" name="email" />
-
         <label for="address">Address (optional)</label>
         <textarea id="address" name="address"></textarea>
-
         <button type="submit">Submit</button>
       </form>
     </div>
   </div>
+  <footer id="contact">
+    <a href="https://t.me/lilmobimechanic" target="_blank"><i class="fab fa-telegram fa-2x" style="color:#1e40af;"></i></a>
+    <p>Contact us via Telegram</p>
+    <p>Created with Love ♥ by lil mobi mechanic</p>
+    <p>&copy; 2025 Mobifix All rights reserved.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    const navMenu = document.getElementById('nav-menu');
+    const hamburger = document.getElementById('hamburger');
 
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function() {
-      emailjs.init({ publicKey: 'zFrWZiZot24i7Mtx1' });
-    })();
-    // Function to open modal and set service name
+    emailjs.init({ publicKey: 'zFrWZiZot24i7Mtx1' });
+
     function openModal(serviceName) {
       document.getElementById('service').value = serviceName;
       document.getElementById('service-modal').classList.add('active');
     }
+
     function closeModal() {
       document.getElementById('service-modal').classList.remove('active');
     }
-    // Handle form submission
-    document.getElementById('service-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      emailjs.sendForm('service_qfgwnx9', 'template_xsl8mqj', this)
-      .then(function(response) {
-        alert('Your request has been sent successfully!');
-        // reset form and close modal
-        document.getElementById('service-form').reset();
-        closeModal();
-      }, function(error) {
-        alert('Failed to send your request. Please try again later.');
-      });
+
+    document.getElementById('services-link').addEventListener('click', function() {
+      document.getElementById('services').style.display = 'block';
+      document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('home-link').addEventListener('click', function() {
+      document.getElementById('services').style.display = 'none';
+    });
+
+    document.getElementById('contact-link').addEventListener('click', function() {
+      document.getElementById('services').style.display = 'none';
+    });
+
+    document.getElementById('service-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      emailjs.sendForm('service_qfgwnx9','template_xsl8mqj',this)
+        .then(()=>{alert('Your request has been sent successfully!'); this.reset(); closeModal();},()=>{alert('Failed to send your request. Please try again later.');});
     });
   </script>
 </body>
