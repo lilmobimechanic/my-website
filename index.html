@@ -73,6 +73,12 @@ body::before {
   pointer-events: none;
 }
 
+
+/* Shorter input field for IMEI/SN */
+.short-input {
+  width: 60%;
+  max-width: 300px;
+}
 </style>
 </head>
 <body>
@@ -109,24 +115,29 @@ body::before {
   <div class="modal" id="service-modal">
     <div class="modal-content">
       <button class="close-button" onclick="closeModal()">&times;</button>
+      
       <h2>Request Service</h2>
       <form id="service-form">
         <label for="service">Service</label>
         <input type="text" id="service" name="service" readonly />
         <label for="name">Name*</label>
-        <input type="text" id="name" name="name" required />
+        <input type="text" id="name" name="name" placeholder="Your Name" required />
         <label for="phone">Phone Number*</label>
-        <input type="tel" id="phone" name="phone" required />
+        <input type="tel" id="phone" name="phone" placeholder="e.g. +1234567890" required />
         <label for="model">Device Model*</label>
-        <input type="text" id="model" name="model" required />
-        <label for="problem">Problem*</label>
-        <textarea id="problem" name="problem" required></textarea>
-        <label for="reply_to">Email*</label>
-        <input type="email" id="email" name="reply_to" required />
+        <input type="text" id="model" name="model" placeholder="Device Model" required />
+        
+        <label for="imei">IMEI/SN*</label>
+        <input type="text" id="imei" name="imei" placeholder="IMEI or Serial Number" required class="short-input" />
+<label for="problem">Problem*</label>
+        <textarea id="problem" name="problem" placeholder="Describe the problem" required></textarea>
+        <label for="email">Email*</label>
+        <input type="email" id="email" name="reply_to" placeholder="email@example.com" required />
         <label for="address">Address (optional)</label>
-        <textarea id="address" name="address"></textarea>
+        <textarea id="address" name="address" placeholder="Your address"></textarea>
         <button type="submit">Submit</button>
       </form>
+
     </div>
   </div>
   <footer id="contact">
@@ -139,8 +150,6 @@ body::before {
   <script>
     const navMenu = document.getElementById('nav-menu');
     const hamburger = document.getElementById('hamburger');
-
-    emailjs.init({ publicKey: 'zW3PBUDddgK5Jnxgj' });
 
     function openModal(serviceName) {
       document.getElementById('service').value = serviceName;
@@ -166,8 +175,16 @@ body::before {
 
     document.getElementById('service-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      emailjs.sendForm('service_qfgwnx9','template_nq4dvdh',this)
-        .then(()=>{alert('Your request has been sent successfully!'); this.reset(); closeModal();},()=>{alert('Failed to send your request. Please try again later.');});
+      emailjs.sendForm('service_yt1d9ak','template_xztgz8f','#service-form','zW3PBUDddgK5Jnxgj')
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          alert('Your request has been sent successfully!');
+          this.reset();
+          closeModal();
+        }, function(error) {
+          console.log('FAILED...', error);
+          alert('Failed to send your request. Please try again later.');
+        });
     });
   </script>
 </body>
